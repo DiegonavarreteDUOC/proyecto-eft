@@ -1,0 +1,24 @@
+# ─── Variables de entorno (NUNCA commitear) ───
+.env
+.env.local
+.env.production
+
+# ─── Build artifacts ───
+front_despacho/dist/
+front_despacho/node_modules/
+back-ventas/target/
+back-despachos/target/
+
+# ─── IDE / OS ───
+.DS_Store
+.idea/
+*.iml
+*.class
+*.log
+Thumbs.db
+
+# ─── Docker ───
+*.tar
+
+# ─── Maven ───
+.mvn/wrapper/maven-wrapper.jar

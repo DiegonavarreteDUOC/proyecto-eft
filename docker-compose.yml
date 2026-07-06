@@ -1,0 +1,114 @@
+# ============================================================
+# Docker Compose — Entorno de Desarrollo Local
+# Proyecto: Sistema de Ventas y Despachos
+# ISY1101 — Introducción a Herramientas DevOps
+# ============================================================
+
+services:
+
+  # ──────────────────────────────
+  # Base de Datos MySQL 8.0
+  # ──────────────────────────────
+  db:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # ──────────────────────────────
+  # Backend — API Ventas (puerto 8080)
+  # ──────────────────────────────
+  back-ventas:
+    build:
+      context: ./back-ventas
+      dockerfile: Dockerfile
+    image: ${DOCKERHUB_USERNAME:-local}/api_ventas:latest
+    container_name: back-ventas
+    restart: unless-stopped
+    environment:
+      DB_ENDPOINT: db
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # ──────────────────────────────
+  # Backend — API Despachos (puerto 8081)
+  # ──────────────────────────────
+  back-despachos:
+    build:
+      context: ./back-despachos
+      dockerfile: Dockerfile
+    image: ${DOCKERHUB_USERNAME:-local}/api_despachos:latest
+    container_name: back-despachos
+    restart: unless-stopped
+    environment:
+      DB_ENDPOINT: db
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "8081:8081"
+    networks:
+      - app-network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # ──────────────────────────────
+  # Frontend — React + Nginx (puerto 80)
+  # ──────────────────────────────
+  frontend:
+    build:
+      context: ./front_despacho
+      dockerfile: Dockerfile
+    image: ${DOCKERHUB_USERNAME:-local}/frontend_despacho:latest
+    container_name: frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+    depends_on:
+      - back-ventas
+      - back-despachos
+
+# ──────────────────────────────
+# Volúmenes
+# ──────────────────────────────
+volumes:
+  mysql_data:
+    name: mysql_data
+
+# ──────────────────────────────
+# Redes
+# ──────────────────────────────
+networks:
+  app-network:
+    driver: bridge
+    name: app-network
