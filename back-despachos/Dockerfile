@@ -7,13 +7,11 @@ WORKDIR /app
 
 # Copiar el descriptor de dependencias primero (cache de capas de Maven)
 COPY pom.xml .
-COPY .mvn/ .mvn/
-COPY mvnw mvnw.cmd ./
 
-# Descargar dependencias sin compilar (aprovecha caché si pom.xml no cambia)
+# Descargar dependencias sin compilar (aprovecha cache si pom.xml no cambia)
 RUN mvn dependency:go-offline -B
 
-# Copiar el código fuente y compilar
+# Copiar el codigo fuente y compilar
 COPY src/ src/
 RUN mvn clean package -DskipTests -B
 
