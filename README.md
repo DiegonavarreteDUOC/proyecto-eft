@@ -249,3 +249,4 @@ main         â† producciÃ³n (protegida, triggers CI/CD)
 
 Proyecto acadÃ©mico â€” ISY1101 CITT 2025
 
+
