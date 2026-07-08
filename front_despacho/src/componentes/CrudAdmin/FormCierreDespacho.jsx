@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+﻿import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import axios from "axios";
 
@@ -16,7 +16,7 @@ export const FormCierreDespacho = ({ despacho, onClose }) => {
 
     try {
       await axios.put(
-        `http://192.168.320/api/v1/despachos/${despacho.idDespacho}`,
+        `/api/v1/despachos/${despacho.idDespacho}`,
         jsonData,
         {
           headers:{
@@ -26,7 +26,7 @@ export const FormCierreDespacho = ({ despacho, onClose }) => {
         }
       );
       Swal.fire({
-        title: "Despacho modificado 🛻!",
+        title: "Despacho modificado ðŸ›»!",
         text: "El despacho ha sido modificado exitosamente",
         icon: "success",
         confirmButtonText: "Aceptar",
@@ -60,14 +60,14 @@ export const FormCierreDespacho = ({ despacho, onClose }) => {
           <label className="block font-bold mb-2">Fecha despacho</label>
           <input
             type="date"
-            placeholder="Elige patente de camión"
+            placeholder="Elige patente de camiÃ³n"
             className="border border-gray-300 rounded-lg block w-full text-slate-400 p-1"
             value={despacho.fechaDespacho}
             disabled={true}
           />
         </div>
         <div className="mb-5">
-          <label className="block font-bold mb-2">Patente Camión</label>
+          <label className="block font-bold mb-2">Patente CamiÃ³n</label>
           <input
             type="text"
             disabled={true}
@@ -105,7 +105,7 @@ export const FormCierreDespacho = ({ despacho, onClose }) => {
           />
         </div>
         <div className="mb-5">
-          <label className="block font-bold mb-2">Dirección Compra</label>
+          <label className="block font-bold mb-2">DirecciÃ³n Compra</label>
           <input
             type="text"
             className="border border-gray-300 rounded-lg block w-full text-slate-400 p-1"
@@ -133,3 +133,4 @@ export const FormCierreDespacho = ({ despacho, onClose }) => {
     </>
   );
 };
+

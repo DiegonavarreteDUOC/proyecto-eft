@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal } from "./Modal";
 import { FormCierreDespacho } from "./FormCierreDespacho";
@@ -8,7 +8,7 @@ export const TableDespachos = () => {
 
   const despacho = async () => {
     await axios
-      .get("http://192.168.3.20/api/v1/despachos", {
+      .get("/api/v1/despachos", {
         headers:{
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -19,7 +19,7 @@ export const TableDespachos = () => {
         setDespachos(response.data);
       });
   };
-  // Llamada a la función para obtener los datos cuando el componente se monta
+  // Llamada a la funciÃ³n para obtener los datos cuando el componente se monta
   useEffect(() => {
     despacho();
   }, []);
@@ -42,9 +42,9 @@ export const TableDespachos = () => {
                 <tr className="py-10">
                   <th className="pr-10">Orden de despacho</th>
                   <th className="pr-10">Orden de compra</th>
-                  <th className="pr-10">Dirección de entrega</th>
+                  <th className="pr-10">DirecciÃ³n de entrega</th>
                   <th className="pr-10">Fecha despacho</th>
-                  <th className="pr-10">Patente Camión</th>
+                  <th className="pr-10">Patente CamiÃ³n</th>
                   <th className="pr-10">Entregado</th>
                   <th className="pr-10">Intentos de entrega</th>
                 </tr>
@@ -109,3 +109,4 @@ export const TableDespachos = () => {
     </>
   );
 };
+

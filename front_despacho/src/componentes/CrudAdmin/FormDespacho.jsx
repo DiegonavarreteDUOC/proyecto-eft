@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+﻿import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import axios from "axios";
 
@@ -25,7 +25,7 @@ export const FormDespacho = ({ venta, onClose }) => {
 
     try {
       await axios.put(
-        `http://192.168.30/api/v1/ventas/${venta.idVenta}`,
+        `/api/v1/ventas/${venta.idVenta}`,
         jsonDataSales,
         {
           headers:{
@@ -34,15 +34,15 @@ export const FormDespacho = ({ venta, onClose }) => {
       }
         }
       );
-      await axios.post("http://192.168.320/api/v1/despachos", jsonData, {
+      await axios.post("/api/v1/despachos", jsonData, {
         headers:{
           'Content-Type': 'application/json',
           'Accept': 'application/json'
     }
       });
       Swal.fire({
-        title: "Despacho registrado 🛻!",
-        text: "El despacho ha sido generado con éxito en la base de datos",
+        title: "Despacho registrado ðŸ›»!",
+        text: "El despacho ha sido generado con Ã©xito en la base de datos",
         icon: "success",
         confirmButtonText: "Aceptar",
       });
@@ -70,10 +70,10 @@ export const FormDespacho = ({ venta, onClose }) => {
           />
         </div>
         <div className="mb-5">
-          <label className="block font-bold mb-2">Patente de camión</label>
+          <label className="block font-bold mb-2">Patente de camiÃ³n</label>
           <input
             type="text"
-            placeholder="Elige patente de camión"
+            placeholder="Elige patente de camiÃ³n"
             className="border border-gray-300 rounded-lg block w-full p-1"
             {...register("patenteCamion", { required: true })}
           />
@@ -90,7 +90,7 @@ export const FormDespacho = ({ venta, onClose }) => {
           />
         </div>
         <div className="mb-5">
-          <label className="block font-bold mb-2">Dirección de entrega</label>
+          <label className="block font-bold mb-2">DirecciÃ³n de entrega</label>
           <input
             type="text"
             disabled={true}
@@ -118,3 +118,4 @@ export const FormDespacho = ({ venta, onClose }) => {
     </>
   );
 };
+
