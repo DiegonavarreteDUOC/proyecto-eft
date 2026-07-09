@@ -241,8 +241,7 @@ main         â† producciÃ³n (protegida, triggers CI/CD)
 ## ðŸ‘¥ Equipo
 
 - **Integrante 1**: [Nombre]
-- **Integrante 2**: [Nombre]
-
+- 
 ---
 
 ## ðŸ“„ Licencia
